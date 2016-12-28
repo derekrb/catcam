@@ -23,7 +23,7 @@ def video():
         return 'unrecognized video', 400
 
     cmd = ['omxplayer', '-b', '-o', 'hdmi']
-    cmd.append(VIDEOS[video])
+    cmd.append(VIDEOS[request.args['video']])
     subprocess.check_call(cmd)
 
     return 'OK', 200
