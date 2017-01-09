@@ -1,8 +1,8 @@
-from flask import request
+from flask import request, Response
 import subprocess
 
 from app import app
-
+import camera
 
 VIDEOS = {
     'test': '/opt/vc/src/hello_pi/hello_video/test.h264'
@@ -27,3 +27,8 @@ def video():
     subprocess.check_call(cmd)
 
     return 'OK', 200
+
+@app.route('/stream')
+def stream():
+    return Response(camera.gen(camera.Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
